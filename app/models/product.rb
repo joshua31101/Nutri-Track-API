@@ -1,5 +1,6 @@
 class Product
   include Mongoid::Document
+  has_many :nutrients
 
   field :NDB_Number, type: Integer
   field :long_name, type: String
@@ -9,4 +10,6 @@ class Product
   field :date_modified, type: DateTime
   field :date_available, type: DateTime
   field :ingredients_english, type: String
+
+  embeds_many :nutrients
 end
