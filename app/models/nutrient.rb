@@ -1,5 +1,6 @@
 class Nutrient
 	include Mongoid::Document
+	belongs_to :product
 
 	field :NDB_Number, type: Integer
 	field :code, type: Integer
