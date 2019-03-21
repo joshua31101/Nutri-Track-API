@@ -9,4 +9,6 @@ class Product
   field :date_modified, type: DateTime
   field :date_available, type: DateTime
   field :ingredients_english, type: String
+
+  embeds_many :nutrients
 end

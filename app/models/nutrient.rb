@@ -7,4 +7,6 @@ class Nutrient
 	field :Derivation_Code, type: String
 	field :Output_value, type: Float
 	field :Output_uom, type: String
+
+	embedded_in :product
 end
