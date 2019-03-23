@@ -2,6 +2,7 @@ class Product
   include Mongoid::Document
 
   field :NDB_Number, type: Integer
+  field :score, type: Float
   field :long_name, type: String
   field :data_source, type: String
   field :gtin_upc, type: Integer
