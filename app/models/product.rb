@@ -1,5 +1,6 @@
 class Product
   include Mongoid::Document
+  has_many :nutrients
 
   field :NDB_Number, type: Integer
   field :score, type: Float
