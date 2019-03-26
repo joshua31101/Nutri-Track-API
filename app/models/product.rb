@@ -2,7 +2,7 @@ class Product
   include Mongoid::Document
   has_many :nutrients
 
-  field :NDB_Number, type: Integer
+  field :ndb_number, type: Integer
   field :score, type: Float
   field :long_name, type: String
   field :data_source, type: String
