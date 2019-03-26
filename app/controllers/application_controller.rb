@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
     begin
       @decoded = JsonWebToken.decode(header)
       @current_user = User.find(@decoded[:id])
-    rescue Mongoid::Errors::DocumentNotFound => e
+    rescue Mongoid::Errors::InvalidFind => e
       render json: { error: e.message }, status: :unauthorized
     rescue JWT::DecodeError => e
       render json: { error: e.message }, status: :unauthorized
