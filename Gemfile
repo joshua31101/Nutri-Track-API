@@ -16,6 +16,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 
 gem 'mongoid', '~> 6.1.0'
+gem 'searchkick'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
