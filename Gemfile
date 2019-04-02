@@ -15,6 +15,7 @@ gem 'puma', '~> 3.11'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 gem 'rack-cors'
+gem 'active_model_serializers', '~> 0.10.9'
 
 gem 'mongoid', '~> 6.1.0'
 gem 'searchkick'
