@@ -1,0 +1,11 @@
+invalid_resource:
+  status: '400'
+  title: 'Bad Request'
+
+not_found:
+  status: '404'
+  title: 'Not Found'
+
+unprocessable_entity:
+  status: '422'
+  title: 'Unable to process resource'

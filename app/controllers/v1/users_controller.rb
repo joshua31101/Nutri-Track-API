@@ -17,15 +17,15 @@ module V1
       if @user.save
         render json: @user, status: :created
       else
-        render json: { error: @user.errors.full_messages.first },
-              status: :unprocessable_entity
+        respond_with_error('unprocessable_entity', @user)
       end
     end
 
     def update
-      unless @user.update(user_params)
-        render json: { error: @user.errors.full_messages.first },
-              status: :unprocessable_entity
+      if @user.update(user_params)
+        render json: @user, status: :ok
+      else
+        respond_with_error('unprocessable_entity', @user)
       end
     end
 
@@ -38,11 +38,11 @@ module V1
     def find_user
       @user = User.find(params[:id])
       rescue Mongoid::Errors::DocumentNotFound
-        render json: { error: 'User not found' }, status: :not_found
+        respond_with_error('not_found')
     end
 
     def user_params
-      params.permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation)
     end
   end
 end

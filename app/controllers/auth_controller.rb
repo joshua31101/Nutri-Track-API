@@ -4,7 +4,7 @@ class AuthController < ApplicationController
   def login
     @user = User.where(email: params[:email]).first
     if @user.blank?
-      return render json: { error: 'User not found' }, status: :not_found
+      return respond_with_error('not_found')
     end
 
     if @user.authenticate(params[:password])
