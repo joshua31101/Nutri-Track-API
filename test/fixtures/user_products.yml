@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: MyString
+  product_id: MyString
+  purchase_date: 2019-04-09
+
+two:
+  user_id: MyString
+  product_id: MyString
+  purchase_date: 2019-04-09

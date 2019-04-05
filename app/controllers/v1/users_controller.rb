@@ -1,7 +1,7 @@
 module V1
   class UsersController < ApplicationController
     before_action :authorize_request, except: :create
-    before_action :find_user, except: %i[create index]
+    before_action :find_user, except: [:create, :index]
 
     def index
       @users = User.all

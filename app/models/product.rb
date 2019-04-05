@@ -1,8 +1,9 @@
 class Product
   include Mongoid::Document
+  has_many :user_products
   has_many :nutrients
 
-  searchkick
+  searchkick word_start: [:long_name]
 
   field :ndb_number, type: Integer
   field :score, type: Float
