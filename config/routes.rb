@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     resources :users do
       resources :user_products, path: 'products', except: [:new, :update, :edit]
     end
+
     post '/users/:user_id/upload-receipt', to: 'user_products#upload'
     get '/products/:id', to: 'products#show'
+    get '/products/:id/serving-size', to: 'products#find_serving_size'
   end
 end
