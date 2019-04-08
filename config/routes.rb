@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     post '/users/:user_id/upload-receipt', to: 'user_products#upload'
     get '/products/:id', to: 'products#show'
     get '/products/:id/serving-size', to: 'products#find_serving_size'
+    get '/products/:id/ingredients', to: 'product_ingredients#show'
   end
 end

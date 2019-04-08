@@ -1,5 +1,6 @@
 class Ingredient
   include Mongoid::Document
+
   field :name, type: String
   field :alt_names, type: String
   field :desc, type: String
@@ -7,4 +8,12 @@ class Ingredient
   field :found_in, type: String
   field :possible_health_effects, type: String
   field :allergy, type: String
+
+  searchkick word: [:name]
+
+  def search_data
+    {
+      name: name.downcase
+    }
+  end
 end
