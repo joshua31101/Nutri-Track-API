@@ -15,6 +15,9 @@ class IngredientScraper < ActiveJob::Base
       rescue OpenURI::HTTPError => err
         puts 'an error occurred while opening the webpage'
         next
+      rescue URI::InvalidURIError => err
+        puts 'an error occurred while opening the webpage'
+        next
       end
       info = d.css('.results-categories2 + p')
       name = d.css('.ing-title').text.strip
@@ -24,6 +27,7 @@ class IngredientScraper < ActiveJob::Base
       found_in = ''
       possible_health_effects = ''
       allergy = ''
+      grade = ''
 
       d.css('.results-categories2').each_with_index do |result, index|
         text = result ? result.text : ''
@@ -42,6 +46,10 @@ class IngredientScraper < ActiveJob::Base
         end
       end
 
+      d.css('.bfs-grade').each do |grade|
+        grade = grade.text
+      end
+
       puts name
 
       Ingredient.create(
@@ -51,7 +59,8 @@ class IngredientScraper < ActiveJob::Base
         additional_info: additional_info,
         found_in: found_in,
         possible_health_effects: possible_health_effects,
-        allergy: allergy
+        allergy: allergy,
+        grade: grade
       )
     end
     puts '*********** Finished ***********'
