@@ -19,6 +19,7 @@ gem 'active_model_serializers', '~> 0.10.9'
 
 gem 'mongoid', '~> 6.1.0'
 gem 'searchkick'
+gem 'sidekiq', '~> 5.2.6'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

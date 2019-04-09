@@ -35,6 +35,7 @@ module V1
       when Net::HTTPSuccess
         product_ids = add_products_to_user(JSON.parse(res.body)['ParsedResults'][0]['ParsedText'])
         if product_ids.present?
+          IngredientWorker.perform_async(product_ids)
           render json: { products: Product.find(product_ids) }, status: :ok
         else
           respond_with_error('not_found')
