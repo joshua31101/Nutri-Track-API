@@ -8,6 +8,7 @@ class Ingredient
   field :found_in, type: String
   field :possible_health_effects, type: String
   field :allergy, type: String
+  field :grade, type: String
 
   searchkick word: [:name]
 
