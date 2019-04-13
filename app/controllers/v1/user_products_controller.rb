@@ -14,6 +14,13 @@ module V1
     end
 
     def destroy
+      @user_product = UserProduct.where(product_id: params[:id])
+      if @user_product.present?
+        @user_product.destroy
+        render json: { success: 'Successfully deleted' }, status: :ok
+      else
+        respond_with_error('not_found')
+      end
     end
 
     def upload
@@ -71,7 +78,9 @@ module V1
         product = Product.search(k, fields: [{long_name: :word_start}]).first
         if product.present?
           product_ids << product.id
-          UserProduct.create(user_id: @user.id, product_id: product.id, purchase_date: Time.now, count: v)
+          unless UserProduct.where(user_id: @user.id, product_id: product.id).present?
+            UserProduct.create(user_id: @user.id, product_id: product.id, purchase_date: Time.now, count: v)
+          end
         end
       end
       return product_ids
