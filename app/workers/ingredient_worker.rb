@@ -9,7 +9,8 @@ class IngredientWorker
         ingredient = Ingredient.search(ing.gsub(/\W/,' ').strip.downcase, fields: [{name: :exact}])
         ingredient_ids << ingredient.first.id if ingredient.present?
       end
-      ProductIngredient.create(product_id: product.id, ingredient_ids: ingredient_ids)
+      product_ingredient = ProductIngredient.find_or_create_by(product_id: product.id)
+      ProductIngredient.update(ingredient_ids: ingredient_ids)
       ingredient_ids = []
     end
   end
