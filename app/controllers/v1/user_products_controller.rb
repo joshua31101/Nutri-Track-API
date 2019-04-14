@@ -52,6 +52,15 @@ module V1
       end
     end
 
+    def get_recommended_foods
+      product_ids = @user.user_products.map(&:product_id)
+      recommended_foods = []
+      FoodRecommend.where(id: { :$in => product_ids }).each do |recommended_food|
+        recommended_foods += Product.order_by(score: :desc).find(recommended_food.recommended_product_ids)
+      end
+      render json: { food_recommended: recommended_foods }, status: :ok
+    end
+
     private
 
     def add_products_to_user(text)
