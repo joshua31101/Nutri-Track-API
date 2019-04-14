@@ -11,5 +11,6 @@ Rails.application.routes.draw do
     get '/products/:id', to: 'products#show'
     get '/products/:id/serving-size', to: 'products#find_serving_size'
     get '/products/:id/ingredients', to: 'product_ingredients#show'
+    get '/users/:user_id/recommended-foods', to: 'user_products#get_recommended_foods'
   end
 end
