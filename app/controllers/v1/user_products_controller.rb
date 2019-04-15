@@ -81,7 +81,7 @@ module V1
         next if line.count("a-zA-Z") == 0
         food_words = []
         line.strip.split.each do |w|
-          food_words << w if w.length > 1
+          food_words << w if w.length > 2
         end
         food_text = food_words.join(' ')
         if set.include? food_text
