@@ -61,6 +61,15 @@ module V1
       render json: { food_recommended: recommended_foods }, status: :ok
     end
 
+    def get_recipes
+      uri = URI("http://www.recipepuppy.com/api/?i=#{params[:ingredients]}&p=#{params[:page] ? params[:page] : '1'}")
+      recipes = JSON.parse(Net::HTTP.get(uri))['results']
+      recipes.each do |recipe|
+        recipe['id'] = recipe['title']
+      end
+      render json: { recipes: recipes }, status: :ok
+    end
+
     private
 
     def add_products_to_user(text)
