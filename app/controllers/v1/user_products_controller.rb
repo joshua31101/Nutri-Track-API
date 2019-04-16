@@ -13,6 +13,15 @@ module V1
     def show
     end
 
+    def add
+      if UserProduct.where(user_id: @user.id, product_id: params[:id]).present?
+        respond_with_error('unprocessable_entity')
+      else
+        @user_product = UserProduct.create(user_id: @user.id, product_id: params[:id], purchase_date: Time.now)
+        render json: { product: Product.find(params[:id]) }, status: :ok
+      end
+    end
+
     def destroy
       @user_product = UserProduct.where(product_id: params[:id])
       if @user_product.present?
