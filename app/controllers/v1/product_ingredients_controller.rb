@@ -15,7 +15,8 @@ module V1
           ingredient = Ingredient.search(ing.gsub(/\W/,' ').strip.downcase, fields: [{name: :exact}])
           @ingredients << ingredient.first if ingredient.present?
         end
-        ProductIngredient.create(product_id: @product.id, ingredient_ids: @ingredients.map(&:id))
+        productIngredient = ProductIngredient.find_or_create_by(product_id: @product.id)
+        productIngredient.update(ingredient_ids: @ingredients.map(&:id))
       end
       render json: { ingredients: @ingredients }, status: :ok
     end
