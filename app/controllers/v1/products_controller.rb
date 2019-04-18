@@ -16,6 +16,7 @@ module V1
 
     def search
       @products = Product.search(params[:query], fields: [{long_name: :word_start}], limit: 10)
+      IngredientWorker.perform_async(@products.map(&:to_s)) if @products.present?
       render json: { searched_products: @products }, status: :ok
     end
 
