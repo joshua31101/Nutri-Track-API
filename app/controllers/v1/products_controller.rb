@@ -15,7 +15,9 @@ module V1
     end
 
     def search
+      # Searches up to 10 products whose long_name starts with the query
       @products = Product.search(params[:query], fields: [{long_name: :word_start}], limit: 10)
+      # Perform asynchronous query job in the background
       IngredientWorker.perform_async(@products.map(&:to_s)) if @products.present?
       render json: { searched_products: @products }, status: :ok
     end

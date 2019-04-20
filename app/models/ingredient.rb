@@ -10,8 +10,10 @@ class Ingredient
   field :allergy, type: String
   field :grade, type: String
 
+  # Define Elasticsearch word matching for name field
   searchkick word: [:name]
 
+  # Elasticsearch properties to be indexed
   def search_data
     {
       name: name.downcase

@@ -4,6 +4,8 @@ class FoodRecommendation < ActiveJob::Base
     total_count = Product.count - 1
     p 'Create recommended food list'
     Product.all[0..total_count].each do |product|
+      # select similar products whose long_name partially matches
+      # with score equal or greater than current product
       recommended_product_ids = product.similar.to_a.select { |p| p.score >= product.score }.map(&:id)
       food_recommend = FoodRecommend.find_or_create_by(product_id: product.id)
       food_recommend.update(recommended_product_ids: recommended_product_ids)

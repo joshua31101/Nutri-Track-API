@@ -51,6 +51,7 @@ module V1
       when Net::HTTPSuccess
         product_ids = add_products_to_user(JSON.parse(res.body)['ParsedResults'][0]['ParsedText'])
         if product_ids.present?
+          # after products are found from an image, perform async query job in the background
           IngredientWorker.perform_async(product_ids.map(&:to_s))
           render json: { products: Product.find(product_ids) }, status: :ok
         else
@@ -62,8 +63,10 @@ module V1
     end
 
     def get_recommended_foods
+      # get product ids of a user (foods added/scanned)
       product_ids = @user.user_products.map(&:product_id)
       recommended_foods = []
+      # get recommended foods from the product_ids
       FoodRecommend.where(id: { :$in => product_ids }).each do |recommended_food|
         recommended_foods += Product.order_by(score: :desc).find(recommended_food.recommended_product_ids)
       end
@@ -81,6 +84,8 @@ module V1
 
     private
 
+    # Param: parsed text of an image
+    # Return: an array of product ids that match with the text
     def add_products_to_user(text)
       product_ids = []
       set = Set.new
@@ -90,9 +95,11 @@ module V1
         next if line.count("a-zA-Z") == 0
         food_words = []
         line.strip.split.each do |w|
+          # for accurate query, skip words consisting of 1 or 2 characters
           food_words << w if w.length > 2
         end
         food_text = food_words.join(' ')
+        # add food text to the set to prevent duplicate items searched
         if set.include? food_text
           counter[food_text] += 1
         else
@@ -102,6 +109,7 @@ module V1
       end
 
       counter.each do |k, v|
+        # search long_name of product that matches with the parsed text
         product = Product.search(k, fields: [{long_name: :word_start}]).first
         if product.present?
           product_ids << product.id

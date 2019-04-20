@@ -3,6 +3,7 @@ class Product
   has_many :user_products
   has_many :nutrients
 
+  # Define Elasticsearch word_start matching for long_name field
   searchkick word_start: [:long_name]
 
   field :ndb_number, type: Integer
@@ -15,6 +16,7 @@ class Product
 
   embeds_many :nutrients
 
+  # Elasticsearch properties to be indexed
   def search_data
     {
       ndb_number: ndb_number,
